@@ -1,2 +1,1 @@
-# testing
-a simple test repo
+My Leet Code Solutions
