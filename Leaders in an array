@@ -1,0 +1,18 @@
+class Solution:
+    #Back-end complete function Template for Python 3
+    
+    #Function to find the leaders in the array.
+    def leaders(self, A, N):
+        #Code here
+        output=[]
+        dp = [0]*N
+        dp[N-1] = A[N-1]
+        k=N-2
+        while(k>=0):
+            dp[k] = max(dp[k+1],A[k])
+            k-=1
+        for i in range(len(A)):
+            if(dp[i] == A[i]):
+                output.append(A[i])
+        return output
+        
