@@ -1,0 +1,66 @@
+import sys
+""" Node is defined as
+class node:
+  def __init__(self, data):
+      self.data = data
+      self.left = None
+      self.right = None
+"""
+max_int = 10**4
+min_int = 0
+def check_binary_search_tree_(root):
+    def checkNode(root,mini,maxi):
+        if(root == None):
+            return True
+        if(root.data<mini or root.data>maxi):
+            return False
+        return checkNode(root.left,mini,root.data-1) and checkNode(root.right,root.data+1,maxi)
+    return checkNode(root,min_int,max_int)
+
+
+
+
+ '''
+    if(root == None):
+        return None
+    if(root.left and root.left.data < root.data):
+        check_binary_search_tree_(root.left)
+    else:
+        return False
+    if(root.right and root.right.data > root.data):
+        check_binary_search_tree_(root.right)
+    else:
+        return False
+    return True'''
+    
+    
+    this didnt work because
+    To those of you having issues with simple recursive code that just checks if the children are less/greater than the current node...
+
+Right now, as you recurse down the tree you're going to only check if the children are "valid" with respect to their parent. But consider the following tree:
+
+     3
+    / \
+   /   \
+  2     6
+ / \   / \
+1   4 5   7
+You'll notice that 4 > 2 BUT 4 > 3. The number 4 should be on the right side of the tree. If you wanted it to be more like a BST it should actually look like:
+
+      3
+     / \
+    /   \
+   /     \
+  2       6
+ / \     / \
+1   4   /   \
+       5     7
+      /
+     4 
+As a result, you'll want to make sure that on a given call of your function, you know what upstream "min" and "max" to compare against. 
+Eg; with node "4" we know that the "max" on the left subtree is "3" (the root). The "min" is "1". 
+Now, it might be tempting to do an in-order traversal of the tree to find the allowable min/max for each node. But it's simpler if you don't allow duplicates in your tree.
+
+On a given node, left children must be at least 1 less than the current node. Right children must be at least 1 greater than the current node.
+We can start with a left-most bound of the smallest representable integer and a right-most bound of the largest representable integer.
+        
